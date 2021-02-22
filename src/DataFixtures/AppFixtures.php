@@ -21,8 +21,8 @@ class AppFixtures extends Fixture
     {
         $user = new User();
         $user->setName('Orange France');
-        $user->setUuid(uniqid());
-        $password = uniqid();
+        $user->setEmail("orange@orange.fr");
+        $password = "clientpassword";
         $encoded = $this->encoder->encodePassword($user, $password);
         $user->setPassword($encoded);
         $manager->persist($user);

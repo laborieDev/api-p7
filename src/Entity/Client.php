@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
+use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ClientRepository;
 use JMS\Serializer\Annotation as Serializer;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
@@ -76,5 +77,14 @@ class Client
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * @param User $user
+     * @return Bool 
+     */
+    public function isUserClient(User $user = null)
+    {
+        return $user === $this->getUser();
     }
 }

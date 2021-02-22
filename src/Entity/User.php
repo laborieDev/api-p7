@@ -24,7 +24,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $uuid;
+    private $email;
 
     /**
      * @ORM\Column(type="string")
@@ -67,25 +67,6 @@ class User implements UserInterface
     }
 
     /**
-     * @return String $uuid
-     */
-    public function getUuid(): ?string
-    {
-        return $this->uuid;
-    }
-
-    /**
-     * @param String $uuid
-     * @return User this
-     */
-    public function setUuid(string $uuid): self
-    {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
-
-    /**
      * A visual identifier that represents this user.
      *
      * @see UserInterface
@@ -93,7 +74,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->uuid;
+        return (string) $this->email;
     }
 
     /**
@@ -245,6 +226,18 @@ class User implements UserInterface
         if ($this->products->removeElement($product)) {
             $product->removeUser($this);
         }
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }
