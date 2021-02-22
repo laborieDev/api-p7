@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\User;
+use JMS\Serializer\Annotation as Serializer;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\Collection;
@@ -17,21 +18,30 @@ class Product
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Serializer\Groups({"list"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Serializer\Groups({"detail", "list"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="float")
+     * @Serializer\Groups({"detail", "list"})
      */
     private $unitPrice;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="products")
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="products")
+     * @ORM\JoinTable(
+     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     *)
      */
     private $users;
 

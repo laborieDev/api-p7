@@ -29,7 +29,7 @@ class AppFixtures extends Fixture
 
         $manager->flush();
 
-        for($i = 0; $i < 10; $i++){
+        for($i = 0; $i < 30; $i++){
             $client = new Client();
             $client->setName('Client '.$i);
             $client->setUser($user);
