@@ -130,4 +130,14 @@ class Product
 
         return $this;
     }
+
+
+    /**
+     * @param User $user
+     * @return Bool 
+     */
+    public function isUserProduct(User $user = null)
+    {
+        return $this->getUsers()->contains($user);
+    }
 }

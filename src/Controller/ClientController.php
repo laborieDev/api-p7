@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ClientController extends AbstractFOSRestController
 {
@@ -34,6 +35,8 @@ class ClientController extends AbstractFOSRestController
     /**
      * @Rest\Get("/api/clients/{id}")
      * @View(serializerGroups={"detail"})
+     * 
+     * @Security("client.isUserClient(user)")
      * 
      * @param Client $client
      * @return Response
@@ -60,7 +63,10 @@ class ClientController extends AbstractFOSRestController
             $nbPage = 1;
         }
 
-        $allDatas = $this->entityManager->getRepository(Client::class)->findAll();
+        $allDatas = $this->entityManager->getRepository(Client::class)->findBy([
+            "user" => $this->getUser()
+        ]);
+        
         $allDatas = $this->serialize->serialize($allDatas, 'json', SerializationContext::create()->setGroups(array('list')));
         $allDatas = $this->serialize->deserialize($allDatas, 'array', 'json');
 
@@ -84,6 +90,7 @@ class ClientController extends AbstractFOSRestController
     public function createClient(Client $client)
     {
         $em = $this->getDoctrine()->getManager();
+        $client->setUser($this->getUser());
         $em->persist($client);
         $em->flush();
 
@@ -93,6 +100,8 @@ class ClientController extends AbstractFOSRestController
     /**
      * @Rest\Delete("/api/clients/{id}")
      * @View(statusCode=204) 
+     * 
+     * @Security("client.isUserClient(user)")
      * 
      * @param Client $client
      */

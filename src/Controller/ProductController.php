@@ -13,6 +13,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ProductController extends AbstractFOSRestController
 {
@@ -32,6 +33,8 @@ class ProductController extends AbstractFOSRestController
     /**
      * @Rest\Get("/api/products/{id}")
      * @View(serializerGroups={"detail"})
+     * 
+     * @Security("product.isUserProduct(user)")
      * 
      * @param Product $product
      * @return Product $product
@@ -58,7 +61,7 @@ class ProductController extends AbstractFOSRestController
             $nbPage = 1;
         }
 
-        $allDatas = $this->entityManager->getRepository(Product::class)->findAll();
+        $allDatas = $this->entityManager->getRepository(Product::class)->getUserProducts($this->getUser());
         $allDatas = $this->serialize->serialize($allDatas, 'json', SerializationContext::create()->setGroups(array('list')));
         $allDatas = $this->serialize->deserialize($allDatas, 'array', 'json');
 
