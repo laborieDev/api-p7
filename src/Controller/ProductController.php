@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use JMS\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\SerializationContext;
@@ -36,6 +38,24 @@ class ProductController extends AbstractFOSRestController
      * 
      * @Security("product.isUserProduct(user)")
      * 
+     * @OA\Response(
+     *     response=200,
+     *     description="Retourne les informations sur un produit. Prix en euros (€)",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Product::class, groups={"detail"}))
+     *     )
+     * )
+     * 
+     * @OA\Parameter(
+     *     name="id",
+     *     in="path",
+     *     description="Id d'un produit.",
+     *     @OA\Schema(type="int")
+     * )
+     * 
+     * @OA\Tag(name="Produits")
+     * 
      * @param Product $product
      * @return Product $product
      */
@@ -48,6 +68,24 @@ class ProductController extends AbstractFOSRestController
     /**
      * @Rest\Get("/api/products")
      * @View()
+     * 
+     * @OA\Response(
+     *     response=200,
+     *     description="Retourne la liste de vos produits. Prix en euros (€)",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Product::class, groups={"list"}))
+     *     )
+     * )
+     * 
+     * @OA\Parameter(
+     *     name="page",
+     *     in="query",
+     *     description="Numéro de la page (10 produits par page)",
+     *     @OA\Schema(type="int")
+     * )
+     * 
+     * @OA\Tag(name="Produits")
      * 
      * @param Request $request
      * @param PaginatorInterface $paginator

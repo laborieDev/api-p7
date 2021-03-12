@@ -6,6 +6,7 @@ use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ClientRepository;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
@@ -27,6 +28,17 @@ class Client
      * @Serializer\Groups({"detail", "list"})
      */
     private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Serializer\Groups({"detail", "list"})
+     * 
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email."
+     * )
+     */
+    private $email;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="clients", cascade={"persist"})
@@ -86,5 +98,17 @@ class Client
     public function isUserClient(User $user = null)
     {
         return $user === $this->getUser();
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
     }
 }
