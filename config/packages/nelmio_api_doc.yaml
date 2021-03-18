@@ -2,7 +2,7 @@ nelmio_api_doc:
     documentation:
         info:
             title: BileMo Shop API 
-            description: Récupérer les données de vos utilisateurs et vos produits
+            description: Get all your products datas and users datas
             version: 1.0.0
     areas:
         path_patterns: # an array of regexps

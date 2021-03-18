@@ -33,6 +33,7 @@ class AppFixtures extends Fixture
             $client = new Client();
             $client->setName('Client '.$i);
             $client->setUser($user);
+            $client->setEmail('client'.$i.'@email.fr');
             $manager->persist($client);
 
             $product = new Product();

@@ -100,15 +100,37 @@ class Client
         return $user === $this->getUser();
     }
 
+    /**
+     * @param User $user
+     * @return String
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * @param String $email
+     * @return Client this
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
 
         return $this;
+    }
+
+    /**
+     * Convert This Client to Array
+     * @return array
+     */
+    public function convertToArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'email' => $this->getEmail(),
+            'user' => $this->getUser()
+        ];
     }
 }
