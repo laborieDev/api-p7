@@ -33,20 +33,20 @@ class SecurityController extends AbstractFOSRestController
      * 
      * @OA\Response(
      *     response=200,
-     *     description="Retourne les informations sur un produit. Prix en euros (€)",
+     *     description="Return your Token for identification",
      * )
      * 
      * @OA\Parameter(
      *     name="username",
      *     in="query",
-     *     description="Votre adresse email",
+     *     description="Your email",
      *     @OA\Schema(type="string")
      * )
      * 
      * @OA\Parameter(
      *     name="password",
      *     in="query",
-     *     description="Votre mot de passe",
+     *     description="Your password",
      *     @OA\Schema(type="string")
      * )
      * 

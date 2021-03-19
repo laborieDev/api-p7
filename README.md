@@ -2,6 +2,8 @@
 
 > Projet 7 OpenClassroom / Formation PHP Symfony
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/be4d8e90ec424f3c8b873a30e244d39e)](https://www.codacy.com/gh/laborieDev/api-p7/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=laborieDev/api-p7&amp;utm_campaign=Badge_Grade)
+
 ## Environnement utilisé durant le développement
 * Symfony 4.2.1
 * Composer 1.10.5

@@ -113,7 +113,7 @@ class ClientController extends AbstractFOSRestController
             throw new HttpException(403, "Access denied");
         }
 
-        $nbPage = intval($request->get('page'));
+        $nbPage = (int) $request->get('page');
 
         if ($nbPage == null) {
             $nbPage = 1;
@@ -122,6 +122,7 @@ class ClientController extends AbstractFOSRestController
         $cacheName = 'all_clients_list_'.$user->getId().'_'.$nbPage;
         $cache = new FilesystemAdapter();
 
+        /* Cached datas */
         $values = $cache->get($cacheName, function (ItemInterface $item) use ($paginator, $nbPage, $user) {
             $item->expiresAfter(3600);
         
@@ -185,9 +186,11 @@ class ClientController extends AbstractFOSRestController
 
         $em = $this->getDoctrine()->getManager();
         $client->setUser($user);
+
+        /* check form errors */
         $error = $validator->validate($client);
 
-        if(sizeof($error) != 0){
+        if (count($error) != 0) {
             return $error;
         }
 
@@ -236,14 +239,16 @@ class ClientController extends AbstractFOSRestController
     {
         $em = $this->getDoctrine()->getManager();
 
+        /* Create form for edit Client */
         $form = $this->createForm(ClientType::class, $client, ['client' => $client]);
         $newDatas = $newDatas->convertToArray();
       
         $form->submit($newDatas);
 
+        /* Check form errors */
         $error = $validator->validate($client);
 
-        if(sizeof($error) != 0){
+        if (count($error) != 0) {
             return $error;
         }
 

@@ -109,7 +109,7 @@ class ProductController extends AbstractFOSRestController
             throw new Exception('Acces denied');
         }
 
-        $nbPage = intval($request->get('page'));
+        $nbPage = (int) $request->get('page');
         
         if ($nbPage == null) {
             $nbPage = 1;
@@ -118,6 +118,7 @@ class ProductController extends AbstractFOSRestController
         $cacheName = 'all_products_list_'.$user->getId().'_'.$nbPage;
         $cache = new FilesystemAdapter();
 
+        /* Cached datas */
         $values = $cache->get($cacheName, function (ItemInterface $item) use ($paginator, $nbPage, $user) {
             $item->expiresAfter(3600);
         

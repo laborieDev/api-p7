@@ -26,10 +26,10 @@ class ProductRepository extends ServiceEntityRepository
      */
     public function getUserProducts(User $user)
     {
-        return $query = $this   ->createQueryBuilder('p')
-                                ->innerJoin('p.users', 'u')
-                                ->where('u.id = :user_id')
-                                ->setParameter('user_id', $user->getId())
-                                ->getQuery()->getResult();
+        return $this->createQueryBuilder('p')
+                            ->innerJoin('p.users', 'u')
+                            ->where('u.id = :user_id')
+                            ->setParameter('user_id', $user->getId())
+                            ->getQuery()->getResult();
     }
 }
